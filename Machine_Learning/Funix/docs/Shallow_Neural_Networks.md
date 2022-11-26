@@ -71,6 +71,77 @@ Có các hàm khác có thể thay thế hàm kích hoạt này:
 
 - Tanh
 
-1[O](https://images.viblo.asia/cbaf334a-9f47-489a-be76-09b7c3e121b3.png)
+![O](https://images.viblo.asia/cbaf334a-9f47-489a-be76-09b7c3e121b3.png)
+
+- ReLU
+
+![W](https://images.viblo.asia/89123e87-48e8-4c89-8d6a-d68bff293fdf.png)
+
+Còn nhiều hàm kích hoạt khác, bạn có thể xem chi tiết công thức tính và đạo hàm của nó trong bảng sau:
+
+![R](https://images.viblo.asia/0a7c12f8-f567-4131-abba-83cadb634154.PNG)
+
+Chúng ta có thể chọn các hàm kích hoạt khác nhau tùy thuộc vào vấn đề chúng ta đang cố gắng giải quyết.
+
+## Why do we need non-linear activation functions?
+
+Nếu bạn để ý thì các hàm kích hoạt thường là các hàm phi tuyến tính. Sẽ ra sao nếu chúng ta sử dụng các hàm kích hoạt tuyến tính trên đầu ra của các lớp, nó sẽ tính toán đầu ra dưới dạng một hàm tuyến tính của các tính năng đầu vào. Trước tiên chúng ta tính giá trị Z là: $Z= WX + b$
+
+Trong trường hợp các hàm kích hoạt tuyến tính, đầu ra sẽ bằng Z (thay vì tính toán bất kỳ kích hoạt phi tuyến tính nào): $A = Z$
+
+Sử dụng kích hoạt tuyến tính về cơ bản là vô nghĩa. Thành phần của hai hàm tuyến tính tự nó là một hàm tuyến tính và trừ khi chúng ta sử dụng một số kích hoạt phi tuyến tính, chúng ta không tính toán các giá trị thú vị hơn. Đó là lý do tại sao hầu hết các bài toán sử dụng các chức năng kích hoạt phi tuyến tính.
+
+Một khi chúng ta đã có đầu ra, bước tiếp theo ta sẽ làm gì ? Tất nhiên sẽ là backpropagation để cập nhật lại các trọng số W bằng cách sử dụng `gradient descent`
+
+## Gradient Descent for Neural Networks
+
+Các tham số mà chúng ta phải cập nhật trong mạng nơ ron hai lớp là: $W^{[1]},b^{[1]},W^{[2]},b^{[2]}$
+
+$J(W^{[1]},b^{[1]},W^{[2]},b^{[2]}) = - \frac{1}{m} \Sigma_{i=1}^m L(\widehat{y},y) = - \frac{1}{m} \Sigma_{i=1}^m (y^{(i)}log(a^{[2](i)}) + (1 - y^{(i)}log(1 - a^{[2](i)}$
+
+Các bước gradient descent có thể được tóm tắt là:
+
+![V](https://images.viblo.asia/dafb2448-7671-4896-aecb-b38b1c9a0d4f.PNG)
+
+Chúng ta hãy xem forward và backpropagation của một mạng lưới thần kinh 2 lớp sẽ như thế nào. Forward propagation:
+
+$Z^{[1]} = W^{[1]} * X + b^{[1]}$
+
+$A^{[1]} = g^{[1]}(Z^{[1]})$
+
+$Z^{[2]} = W{[2]} * A^{[1]} + b^{[2]}$
+
+$A^{[2]} = g^{[2]}(Z^{[1]})$
+
+> Ở đây các bạn chú ý g(x) chính đại diện cho phép biến đổi dùng hàm kích hoạt, ở đây trong ví dụ này có thể hiểu $g^{[1]}(Z^{[1]})$ chính là $\sigma(z^{[1]})$
+
+Backpropagation:
+
+![A](https://images.viblo.asia/b779d086-edc4-4a34-8092-bda79e1c3e5e.PNG)
+
+Đây là các bước hoàn chỉnh mà mạng nơ-ron thực hiện để tạo đầu ra. Lưu ý rằng chúng ta phải khởi tạo các trọng số (W) ở ban đầu. Ta sẽ xem cách khởi tạo các trọng số W như thế nào.
+
+## Random Initialization
+
+Câu hỏi đặt ra khở tạo các trọng số W ban đầu như thế nào? Có thể khởi tạo W là ma trận 0 được không? Hãy xem xét ví dụ dưới đây:
+
+![B](https://images.viblo.asia/46fcf5c8-9711-46e4-ba00-82242657d679.png)
+
+Nếu các trọng số được khởi tạo thành 0, ma trận W sẽ là:
+
+![M](https://images.viblo.asia/4114d29a-6d64-4fb2-a560-b346111b4597.png)
+
+Sử dụng các trọng số này thì: $a_1^{[1]} = a_2^{[1]}$
+
+Và cuối cùng ở bước backpropagation: $dZ_1{[1]} = dZ_2^{[1]}$
+
+Cho dù có bao nhiêu đơn vị chúng tôi sử dụng trong một lớp, chúng tôi luôn nhận được cùng một đầu ra tương tự như sử dụng một đơn vị. Vì vậy, thay vì khởi tạo các trọng số về 0, chúng tôi khởi tạo ngẫu nhiên chúng bằng mã sau:
+
+```
+W1 = np.random.randn ((2,2)) * 0,01 
+b  = np.zero ((2,1))
+```
+
+Chúng tôi nhân các trọng số với 0,01 để khởi tạo các trọng số nhỏ. Nếu chúng ta khởi tạo trọng lượng lớn, Z sẽ lớn, hàm kích hoạt sẽ ra số lớn ra cực, dẫn đến độ dốc bằng không (trong trường hợp chức năng kích hoạt sigmoid và tanh). Do đó, việc học sẽ chậm. Vì vậy, chúng tôi thường khởi tạo trọng lượng nhỏ một cách ngẫu nhiên.
 
 [Shallow Neural Networks](https://viblo.asia/p/shallow-neural-networks-Do7546y0ZM6)
