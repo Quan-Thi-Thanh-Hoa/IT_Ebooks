@@ -42,7 +42,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 - RELU là viết tắt của rectified linear unit là chức năng kích hoạt phổ biến nhất hiện nay giúp đào tạo NN sâu nhanh hơn.
 - Các lớp ẩn tự động dự đoán kết nối giữa các đầu vào, đó là điểm mạnh của deep learning.
 - Deep NN bao gồm nhiều lớp ẩn hơn (Deeper layer)
-   - ![]([Images/Others/02.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/Others/02.png))
+   - ![]([](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/Others/02.png)
    - Hình ảnh lấy từ [opennn.net](http://www.opennn.net/)
 - Mỗi Đầu vào sẽ được kết nối với lớp ẩn và NN sẽ quyết định các kết nối.
 - Học có giám sát có nghĩa là chúng ta có (X,Y) và chúng ta cần lấy hàm ánh xạ từ X đến Y.
@@ -65,7 +65,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 - Học sâu đang phát triển vì 3 lý do:
    1. Dữ liệu:
       - Qua hình này ta có thể kết luận:
-        - ![]([Hình ảnh/11.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/11.png))
+        - ![]((https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/11.png)
       - Đối với dữ liệu nhỏ NN có thể thực hiện dưới dạng Hồi quy tuyến tính hoặc SVM (Máy vector hỗ trợ)
       - Đối với dữ liệu lớn, NN nhỏ sẽ tốt hơn SVM
       - Đối với dữ liệu lớn, NN lớn tốt hơn NN trung bình tốt hơn NN nhỏ.
@@ -88,7 +88,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 ### Phân loại nhị phân
 
 - Chủ yếu mình muốn nói về cách thực hiện hồi quy logistic để tạo phân loại nhị phân.
-   - ![log]([Hình ảnh/Khác/03.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/Others/03.png))
+   - ![log](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/Others/03.png)
    - Hình lấy từ [3.bp.blogspot.com](http://3.bp.blogspot.com)
 - Anh ấy nói về một ví dụ để biết hình ảnh hiện tại có chứa con mèo hay không.
 - Dưới đây là một số ký hiệu:
@@ -161,7 +161,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 ### Biểu đồ tính toán
 
 - Là đồ thị tổ chức phép tính từ trái sang phải.
-   - ![](Hình ảnh/02.png)
+   - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/02.png)
 
 ### Đạo hàm với Đồ thị Tính toán
 
@@ -169,14 +169,14 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
    Nếu `x -> y -> z` (x ảnh hưởng đến y và y ảnh hưởng đến z)
    Khi đó `d(z)/d(x) = d(z)/d(y) * d(y)/d(x)`
 - Video minh họa ví dụ lớn.
-   - ![]([Hình ảnh/03.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/02.png))
+   - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/03.png)
 - Ta tính đạo hàm trên đồ thị từ phải sang trái sẽ dễ dàng hơn rất nhiều.
 - `dvar` có nghĩa là đạo hàm của một biến đầu ra cuối cùng đối với các đại lượng trung gian khác nhau.
 
 ### Hồi quy logistic Gradient Descent
 
 - Trong video anh ấy đã thảo luận về các dẫn xuất của gradient ví dụ khá cho một mẫu có hai tính năng `x1` và `x2`.
-   - ![]([Hình ảnh/04.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/03.png))
+   - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/04.png)
 
 ### Gradient Descent trên m Ví dụ
 
@@ -193,7 +193,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
    ```
 
 - Vì vậy chúng ta có:
-   ![]([Hình ảnh/09.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/09.png))
+   ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/09.png)
 
 - Sau đó từ phải qua trái ta sẽ tính đạo hàm so với kết quả:
 
@@ -346,7 +346,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 ### Tính toán đầu ra của Mạng nơ-ron
 
 - Phương trình của các lớp ẩn:
-   - ![]([Hình ảnh/05.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/05.png))
+   - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/05.png)
 - Dưới đây là một số thông tin về hình ảnh cuối cùng:
    - `noOfHiddenNeurons = 4`
    - `Nx = 3`
@@ -495,7 +495,7 @@ for i = 1 to m
    # Gợi ý có các phép chuyển vị với phép nhân vì để giữ kích thước chính xác
    ```
 - Cách chúng tôi rút ra 6 phương trình của lan truyền ngược:
-   ![]([Hình ảnh/06.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/06.png))
+   ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/06.png)
 
 ### Khởi tạo ngẫu nhiên
 
@@ -581,9 +581,9 @@ for i = 1 to m
 ### Các khối xây dựng của mạng lưới thần kinh sâu
 
 - Truyền xuôi và truyền ngược cho lớp l:
-   - ![Untitled]([Images/10.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/10.png))
+   - ![Untitled](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/10.png)
 - Khối NN sâu:
-   - ![]((https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/08.png))
+   - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/1-%20Neural%20Networks%20and%20Deep%20Learning/Images/08.png)
 
 ### Forward and Backward Propagation
 
