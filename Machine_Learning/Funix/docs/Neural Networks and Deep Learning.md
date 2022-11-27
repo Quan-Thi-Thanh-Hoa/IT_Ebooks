@@ -4,10 +4,7 @@
 
 ## Mục lục
 
-* [Mạng nơ-ron và học sâu](#mạng nơ-ron và học sâu)
-  * [Mục lục](#bảng-nội dung)
-  * [Tóm tắt khóa học](#tóm tắt khóa học)
-  * [Giới thiệu về học sâu](#giới thiệu về học sâu)
+* Nói chứ mình lười làm mục lục ý, xin lỗi mn nếu có ai đó đọc nhé!. Và lưu ý chỗ bias nếu đọc đoạn đó nhé. Mong bài đọc sẽ hữu ích cho bạn...
 
 ## Tóm tắt Khóa học
 
