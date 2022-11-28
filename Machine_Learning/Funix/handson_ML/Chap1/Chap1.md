@@ -413,8 +413,104 @@ Tất nhiên, nếu tập huấn luyện của bạn chứa đầy lỗi, điể
 - Nếu một số mẫu rõ ràng là ngoại lai, ta có thể đơn thuần loại bỏ chúng hoặc sửa lỗi một cách thủ công.
 - Với những mẫu bị thiếu một số đặc trưng (ví dụ: 5% khách hàng của bạn không cung cấp tuổi của họ), ta cần quyết định giữa việc bỏ qua luôn thuộc tính này, bỏ qua những mẫu bị thiếu, điền vào các giá trị còn thiếu (ví dụ, bằng tuổi trung vị), hoặc huấn luyện hai mô hình: một mô hình với đặc trưng đó và một mô hình thì không.
 
+### Các Đặc trưng Không liên quan
+Có một câu nói là “rác vào, rác ra”. Hệ thống chỉ có thể học được nếu dữ liệu huấn luyện chứa đủ các đặc trưng liên quan và không quá nhiều các đặc trưng không liên quan. Một phần quan trọng dẫn đến một dự án Học Máy thành công là xây dựng được một bộ đặc trưng tốt để huấn luyện. Quy trình này được gọi là thiết kế đặc trưng (feature engineering) và bao gồm các bước sau:
+- Lựa chọn đặc trưng (lựa chọn những đặc trưng hữu ích nhất từ các đặc trưng sẵn có để huấn luyện)
+- Trích xuất đặc trưng (kết hợp các đặc trưng sẵn có để tạo ra một đặc trưng hữu ích hơn, và như đã đề cập phía trên, các thuật toán giảm chiều có thể có ích)
+- Tạo ra các đặc trưng mới bằng cách thu thập thêm dữ liệu
+Ta đã xem xét nhiều ví dụ về dữ liệu xấu, giờ hãy cùng xem xét các ví dụ về thuật toán tệ.
+
+### Quá khớp Dữ liệu Huấn luyện
+Giả sử bạn đang đi du lịch nước ngoài tham quan và bị tài xế taxi “chặt chém”. Bạn có thể sẽ nghĩ rằng tất cả tài xế taxi ở đất nước đó đều là kẻ cắp. Con người thường có thói quen “vơ đũa cả nắm”, và thật không may máy móc cũng có thể rơi vào cái bẫy tương tự nếu chúng ta không cẩn thận. Trong Học Máy, khái niệm này được gọi là quá khớp (overfitting), có nghĩa là mô hình hoạt động tốt trên dữ liệu huấn luyện nhưng lại không có tính khái quát hóa. Hình 1.22 minh họa một mô hình đa thức bậc cao dự đoán mức độ hài lòng về cuộc sống đang quá khớp trên dữ liệu huấn luyện. Mặc dù nó hoạt động trên dữ liệu huấn luyện tốt hơn nhiều so với mô hình tuyến tính đơn giản, bạn có thật sự tin vào những dự đoán của nó không?
+
+![](https://github.com/Quan-Thi-Thanh-Hoa/IT_Ebooks/blob/main/Machine_Learning/Funix/data/H%C3%ACnh%201.22.%20Qu%C3%A1%20kh%E1%BB%9Bp%20d%E1%BB%AF%20li%E1%BB%87u%20hu%E1%BA%A5n%20luy%E1%BB%87n.png?raw=true)
+
+Những mô hình phức tạp như mạng nơ-ron sâu có thể phát hiện được những quy luật không quá rõ ràng trong dữ liệu, nhưng nếu tập huấn luyện chứa nhiễu, hoặc nếu kích thước của tập này quá nhỏ (gây ra nhiễu do lấy mẫu), thì rất có thể mô hình sẽ lại phát hiện cả khuôn mẫu trong nhiễu. Rõ ràng những khuôn mẫu này sẽ không khái quát hóa cho các mẫu dữ liệu mới. Ví dụ, giả sử bạn huấn luyện mô hình dự đoán mức độ hài lòng về cuộc sống với nhiều đặc trưng hơn, bao gồm cả những đặc trưng không hữu ích như tên quốc gia. Trong trường hợp này, một mô hình phức tạp có thể phát hiện những quy luật như: tất cả các quốc gia trong tập huấn luyện với tên tiếng Anh chứa chữ cái w đều có mức độ hài lòng về cuộc sống lớn hơn 7: New Zealand (7.3), Norway (Na Uy – 7.4), Sweden (Thụy Điển – 7.2), và Switzerland (Thụy Sĩ – 7.5). Bạn
+có chắc rằng “quy luật hài lòng w” này áp dụng cho Rwanda hoặc Zimbabwe không? Rõ ràng khuôn mẫu này chỉ xảy ra trong dữ liệu huấn luyện một cách tình cờ, nhưng mô hình không có cách nào để phân biệt được nó là thật hay chỉ đơn giản là nhiễu trong dữ liệu.
+
+### Lưu ý
+Quá khớp xảy ra khi mô hình quá phức tạp so với lượng mẫu và nhiễu của dữ liệu huấn luyện. Đây là những giải pháp để tránh vấn đề này:
+- Đơn giản hóa mô hình bằng cách chọn mô hình có ít tham số hơn (ví dụ, một mô hình tuyến tính thay vì mô hình đa thức bậc cao), giảm số lượng thuộc tính trong dữ liệu huấn luyện, hoặc ràng buộc mô hình.
+- Thu thập thêm dữ liệu huấn luyện.
+- Giảm nhiễu trong dữ liệu huấn luyện (ví dụ như chỉnh sửa lỗi sai trong dữ liệu và loại bỏ những mẫu ngoại lai).
+
+Việc ràng buộc một mô hình để làm cho nó đơn giản hơn và giảm nguy cơ quá khớp được gọi là điều chuẩn (regularization). Ví dụ, mô hình tuyến tính được định nghĩa ở trên có hai tham số là θ0 và θ1. Chúng cho phép thuật toán học với hai mức độ tự do (degrees of freedom) để thích ứng mô hình với dữ liệu huấn luyện: nó có thể điều chỉnh cả chiều cao (θ0) và độ dốc (θ1) của đường thẳng. Nếu chúng ta ép θ1 = 0, thuật toán chỉ còn một mức độ tự do và sẽ gặp khó khăn trong việc khớp dữ liệu: nó chỉ có thể di chuyển đường thẳng lên xuống sao cho càng gần với dữ liệu huấn luyện càng tốt, nên việc huấn luyện sẽ kết thúc gần điểm trung bình. Đây là một mô hình quá đơn giản! Nếu chúng ta cho phép thuật toán điều chỉnh θ1 nhưng buộc nó có giá trị nhỏ thì thuật toán học sẽ có đâu đó từ một đến hai mức độ tự do. Kết quả là một mô hình đơn giản hơn mô hình có hai mức độ tự do, nhưng lại phức tạp hơn mô hình có một mức độ tự do. Chúng ta muốn tìm sự cân bằng giữa việc khớp tập huấn luyện một cách hoàn hảo và giữ mô hình đủ đơn giản để đảm bảo tính khái quát hóa. Hình 1.23 biểu diễn ba mô hình. Đường chấm là mô hình ban đầu được huấn luyện chỉ trên các nước được đại diện bởi hình tròn (không bao gồm các nước đại diện bằng hình vuông), đường nét đứt là mô hình thứ hai được huấn luyện với tất cả các nước (hình tròn và hình vuông), và đường nét liền là mô hình được huấn luyện trên cùng dữ liệu với mô hình đầu tiên nhưng có điều chuẩn. Có thể thấy rằng việc điều chuẩn buộc mô hình có độ dốc nhỏ hơn: mô hình này không khớp với dữ liệu huấn luyện (hình tròn) tốt như mô hình đầu tiên, nhưng nó khái quát hóa tốt hơn trên các mẫu dữ liệu mới mà mô hình chưa thấy ở quá trình huấn luyện (hình vuông).
+
+![](https://raw.githubusercontent.com/Quan-Thi-Thanh-Hoa/IT_Ebooks/main/Machine_Learning/Funix/data/H%C3%ACnh%201.23.%20%C4%90i%E1%BB%81u%20chu%E1%BA%A9n%20gi%E1%BA%A3m%20nguy%20c%C6%A1%20qu%C3%A1%20kh%E1%BB%9Bp.png)
 
 
+Mức độ điều chuẩn áp dụng trong quá trình học có thể được kiểm soát bởi một siêu tham số (hyperparameter). Một siêu tham số là một tham số của thuật toán chứ không phải của mô hình. Vì vậy, nó không bị ảnh hưởng bởi quá trình học. Giá trị của siêu tham số cần được đặt trước khi huấn luyện và sẽ được giữ nguyên trong suốt quá trình huấn luyện. Nếu ta đặt siêu tham số điều chuẩn quá cao, ta sẽ nhận được một mô hình gần như nằm ngang (độ dốc gần bằng 0). Khi đó, thuật toán gần như chắc chắn sẽ không quá khớp dữ liệu huấn luyện, nhưng sẽ khó để tìm được một mô hình tốt. Điều chỉnh siêu tham số là một phần quan trọng trong quá trình xây dựng một hệ thống Học Máy (ví dụ chi tiết sẽ được trình bày ở chương tiếp theo).
 
+### Dưới khớp Dữ liệu Huấn luyện
+
+Như bạn có thể đoán được, dưới khớp (underfitting) ngược lại với quá khớp: nó xảy ra khi mô hình quá đơn giản để học được cấu trúc của dữ liệu. Ví dụ, một mô hình tuyến tính dự đoán mức độ hài lòng về cuộc sống sẽ dễ bị dưới khớp, đơn giản vì đời thực luôn phức tạp hơn mô hình. Vì vậy những dự đoán của nó chắc chắn sẽ không chính xác, kể cả với các mẫu huấn luyện.
+
+Đây là những giải pháp chính để giải quyết vấn đề này:
+- Chọn một mô hình mạnh hơn, với nhiều tham số hơn.
+- Cung cấp đặc trưng tốt hơn cho thuật toán học (thiết kế đặc trưng).
+- Giảm ràng buộc lên mô hình (ví dụ như giảm siêu tham số điều chuẩn).
+
+## Ôn tập
+Cho tới giờ thì bạn đã biết khá nhiều về Học Máy. Tuy nhiên, việc học về quá nhiều khái niệm có thể khiến bạn hơi choáng ngợp, vì vậy hãy cùng lùi lại một chút và nhìn vào bức tranh tổng thể:
+- Học Máy xoay quanh việc giúp máy móc thực hiện một số tác vụ tốt hơn bằng cách học từ dữ liệu thay vì phải lập trình các quy luật một cách tường minh.
+- Có nhiều loại hệ thống ML: có hoặc không giám sát, học theo batch hay học trực tuyến, học dựa trên mẫu hay học dựa trên mô hình.
+- Trong một dự án ML, ta thu thập dữ liệu huấn luyện và đưa chúng vào một thuật toán. Nếu thuật toán đó học dựa trên mô hình, nó sẽ điều chỉnh một vài tham số để khớp mô hình trên dữ liệu huấn luyện (tức để dự đoán tốt trên tập huấn luyện). Sau đó, ta hy vọng rằng mô hình cũng có thể dự đoán tốt trên dữ liệu mới. Nếu thuật toán đó học dựa trên mẫu, nó chỉ học thuộc lòng các mẫu dữ liệu và khái quát hóa cho các trường hợp mới bằng cách sử dụng một phép đo độ tương đồng để so sánh mẫu dữ liệu mới với mẫu dữ liệu đã học.
+- Hệ thống sẽ hoạt động không hiệu quả nếu lượng dữ liệu huấn luyện quá nhỏ, hoặc nếu dữ liệu không mang tính đại diện, có nhiễu hay chứa các đặc trưng không liên quan (“rác vào, rác ra”). Cuối cùng, mô hình không nên quá đơn giản (gây dưới khớp) hoặc quá phức tạp (gây quá khớp).
+
+Còn một chủ đề quan trọng nữa cần được đề cập: một khi mô hình đã được huấn luyện, ta không chỉ ngồi không và “hy vọng” nó sẽ khái quát cho các trường hợp mới. Ta cần phải đánh giá và tinh chỉnh mô hình nếu cần thiết. Hãy cùng xem xét cách để làm điều đó.
+
+## Kiểm tra và Đánh giá
+Cách duy nhất để biết một mô hình khái quát hóa tốt đến đâu là thử nó với những mẫu dữ liệu mới. Một cách để thực hiện việc này là triển khai mô hình rồi giám sát chất lượng của nó.
+
+Cách này ổn, nhưng nếu mô hình hoạt động cực kỳ tệ, người dùng sẽ than phiền. Vì thế nên đây không phải là ý tưởng hay nhất.
+
+Một lựa chọn tốt hơn là tách dữ liệu ra thành hai tập: tập huấn luyện (training set) và tập kiểm tra (test set). Như có thể đoán được từ cái tên, mô hình được huấn luyện trên tập huấn luyện và được kiểm tra trên tập kiểm tra. Tỉ lệ lỗi trên dữ liệu mới được gọi là sai số khái quát – generalization error (hoặc sai số ngoài mẫu – out-of-sample error) và bằng cách đánh giá mô hình trên tập kiểm tra, chúng ta sẽ ước lượng được giá trị sai số này. Giá trị này cho biết mô hình sẽ hoạt động tốt đến đâu trên dữ liệu mới.
+
+Nếu sai số huấn luyện thấp (nghĩa là mô hình có ít lỗi trên tập huấn luyện) nhưng sai số khái quát lại cao, mô hình đã quá khớp dữ liệu huấn luyện.
+
+### Mẹo
+Thông thường 80% dữ liệu được dùng để huấn luyện và 20% được giữ lại để kiểm tra. Tuy nhiên, việc này tuỳ thuộc vào kích cỡ của tập dữ liệu: nếu tập dữ liệu chứa 10 triệu mẫu, việc giữ lại 1% nghĩa là tập kiểm tra sẽ chứa 100,000 mẫu. Số lượng này có thể đã quá đủ để ước lượng tốt sai số khái quát.
+
+### Tinh Chỉnh Siêu Tham Số và Lựa Chọn Mô Hình
+Việc đánh giá một mô hình khá đơn giản: chỉ cần dựa vào tập kiểm tra. Nhưng giả sử bạn đang lưỡng lự giữa hai loại mô hình (ví dụ, giữa một mô hình tuyến tính và một mô hình đa thức). Làm sao để đưa ra quyết định? Một lựa chọn là huấn luyện cả hai và so sánh khả năng khái quát của chúng trên tập kiểm tra.
+
+Giờ hãy giả sử mô hình tuyến tính khái quát tốt hơn nhưng bạn muốn sử dụng thêm điều chuẩn để tránh quá khớp. Câu hỏi được đặt ra là ta chọn giá trị siêu tham số điều chuẩn như thế nào? Một giải pháp là huấn luyện 100 mô hình sử dụng 100 giá trị khác nhau cho siêu tham số này. Giả sử bạn đã tìm được siêu tham số tốt nhất sao cho mô hình có sai số khái quát thấp nhất, chỉ ở mức 5%. Bạn triển khai mô hình này nhưng tiếc rằng nó không tốt như mong đợi với sai số ở mức 15%. Chuyện gì đã xảy ra? Vấn đề là bạn đã tính toán sai số khái quát nhiều lần trên tập kiểm tra và cố gắng tìm các siêu tham số dẫn đến chất lượng tốt nhất trên tập dữ liệu cố định đó. Kết quả là mô hình khó có thể đạt được chất lượng tốt như mong đợi trên dữ liệu mới.
+
+Giải pháp phổ biến cho vấn đề này là kiểm định giữ lại (holdout validation): ta đơn thuần giữ lại một phần của tập huấn luyện để đánh giá nhiều mô hình và chọn cái tốt nhất. Tập dữ liệu được giữ lại đó có tên là tập kiểm định (validation set – hoặc đôi khi được gọi là tập phát triển – development set/dev set). Cụ thể, ta huấn luyện nhiều mô hình với các siêu tham số khác nhau trên tập huấn luyện nhỏ hơn (do đã lấy ra tập kiểm định) và chọn mô hình hoạt động tốt nhất trên tập kiểm định. Sau khi hoàn tất việc kiểm định trên tập giữ lại, ta huấn luyện mô hình tốt nhất trên toàn bộ tập huấn luyện (bao gồm cả tập kiểm định) để thu được mô hình cuối. Cuối
+cùng, ta đánh giá mô hình này trên tập kiểm tra để ước lượng sai số khái quát. Giải pháp này thường cho kết quả tốt. Tuy nhiên, nếu tập kiểm định quá nhỏ thì việc đánh giá mô hình sẽ không chính xác, và ta có thể vô tình chọn phải mô hình không tối ưu. Ngược lại, nếu tập kiểm định quá lớn, phần dữ liệu còn lại để huấn luyện sẽ nhỏ hơn rất nhiều so với tập huấn luyện đầy đủ. Vì sao điều này lại không tốt? Bởi vì mô hình cuối cùng sẽ được huấn luyện trên toàn bộ tập huấn luyện, việc so sánh giữa các mô hình được huấn luyện trên tập huấn luyện nhỏ hơn hẳn là không hợp lý. Để giải quyết vấn đề này, ta có thể dùng kiểm định chéo (cross-validation) với nhiều tập kiểm định nhỏ. Mỗi mô hình sẽ được đánh giá một lần trên mỗi tập kiểm định sau khi nó được huấn luyện trên phần dữ liệu còn lại. Bằng cách lấy trung bình các lần đánh giá, ta sẽ có một thước đo chính xác hơn nhiều cho chất lượng của mô hình. Tuy nhiên, phương pháp này có một hạn chế: thời gian huấn luyện sẽ tăng theo số tập kiểm định.
+
+### Dữ liệu không tương đồng
+Trong một số trường hợp, ta có thể dễ dàng thu được một lượng lớn dữ liệu để huấn luyện, nhưng có lẽ chúng sẽ không đại diện hoàn toàn cho dữ liệu mà ta sẽ gặp phải trong thực tế. Giả sử bạn muốn tạo một ứng dụng điện thoại để chụp ảnh hoa và tự động xác định loài hoa. Bạn có thể dễ dàng tải xuống hàng triệu bức ảnh về hoa trên mạng, nhưng chúng sẽ không phải là đại diện hoàn hảo cho những bức ảnh sẽ được chụp bởi ứng dụng trên thiết bị di động. Có thể chỉ có 10,000 ảnh được chụp bằng ứng dụng đó. Trong trường hợp này, quy tắc quan trọng cần nhớ là tập kiểm định và tập kiểm tra phải mang tính đại diện cho dữ liệu trong thực tế càng nhiều càng tốt. Vì thế, hai tập này chỉ nên chứa các ảnh được chụp bằng ứng dụng: bạn có thể xáo trộn chúng và chia một nửa cho tập kiểm định, một nửa cho tập kiểm tra (đảm bảo rằng
+giữa hai tập không có mẫu nào bị trùng hoặc giống nhau). Nhưng sau khi huấn luyện mô hình bằng ảnh trên mạng, nếu bạn thấy chất lượng của mô hình trên tập kiểm định không tốt, bạn sẽ không biết được nguyên nhân là do mô hình đã quá khớp dữ liệu huấn luyện, hay chỉ là do sự không tương đồng giữa ảnh trên mạng và ảnh được chụp bằng ứng dụng di động. Một giải pháp là giữ lại một vài ảnh huấn luyện (ảnh trên mạng) cho một tập khác mà Andrew Ng gọi là tập huấn luyện - phát triển (train-dev set). Sau khi mô hình được huấn luyện (trên tập huấn luyện, không phải trên tập huấn luyện-phát triển), ta có thể đánh giá nó trên tập huấn luyện - phát triển. Nếu chất lượng tốt, ta biết được rằng mô hình không quá khớp tập huấn luyện. Nếu sau đó mô hình đạt chất lượng kém trên tập kiểm định, vấn đề chắc chắn đến từ việc dữ liệu không tương đồng. Bạn có thể thử giải quyết vấn đề này bằng cách tiền xử lý ảnh tải trên mạng để làm cho chúng giống với ảnh được chụp bởi ứng dụng và sau đó huấn luyện lại mô hình. Ngược lại, nếu mô hình hoạt động kém trên tập huấn luyện - phát triển, mô hình chắc hẳn đã quá khớp dữ liệu huấn luyện, vì vậy bạn nên đơn giản hóa hoặc điều chuẩn mô hình, thu thập thêm và làm sạch dữ liệu huấn luyện.
+
+### Định Lý Không Có Bữa Trưa Miễn Phí
+
+Mô hình là một phiên bản được đơn giản hóa của các mẫu. Đơn giản hóa ở đây đồng nghĩa với việc loại bỏ các chi tiết thừa không có khả năng khái quát hóa cho các trường hợp mới. Để quyết định phần dữ liệu nào cần loại bỏ và phần dữ liệu nào cần giữ lại, bạn cần phải đặt ra các giả định. Ví dụ, một mô hình tuyến tính đưa ra giả định rằng dữ liệu có bản chất tuyến tính và khoảng cách giữa các mẫu và đường thẳng chỉ là nhiễu, và ta có thể bỏ qua khoảng cách đó mà không ảnh hưởng gì.
+
+Trong một bài báo nổi tiếng năm 1996, 11 David Wolpert đã chứng minh rằng nếu bạn không đặt bất kỳ giả định nào về dữ liệu thì không có lý do gì để nói rằng mô hình này tốt hơn mô hình kia. Điều này được gọi là định lý Không có Bữa trưa Miễn phí (No Free Lunch – NFL). Với một số tập dữ liệu, mô hình tốt nhất là mô hình tuyến tính, trong khi với các tập dữ liệu khác, mô hình tốt nhất là một mạng nơ-ron. Không có mô hình nào được tiên nghiệm là sẽ hoạt động tốt hơn (do đó mà định lý có tên như trên). Cách duy nhất để biết chắc rằng mô hình nào tốt nhất là đánh giá tất cả các mô hình. Vì điều này là bất khả thi, trong thực tế, ta cần đưa ra một số giả định hợp lý về dữ liệu và chỉ đánh giá một số mô hình phù hợp. Ví dụ: đối với các tác vụ đơn giản, ta có thể đánh giá các mô hình tuyến tính với nhiều mức điều chuẩn khác nhau. Ngược lại, đối với một bài toán phức tạp, ta có thể đánh giá các mạng nơ-ron khác nhau.
+
+Bài tập
+Trong chương này, chúng tôi đã trình bày một số khái niệm quan trọng nhất trong Học Máy. Trong các chương tiếp theo, chúng ta sẽ đi sâu hơn và viết mã nhiều hơn, nhưng trước khi đi tiếp, hãy đảm bảo bạn biết câu trả lời cho các câu hỏi sau:
+1. Định nghĩa của Học Máy là gì?
+2. Bạn có thể liệt kê bốn loại bài toán mà Học Máy giải quyết tốt không?
+3. Tập huấn luyện đã gán nhãn là gì?
+4. Hai tác vụ học có giám sát phổ biến nhất là gì?
+5. Bạn có thể liệt kê bốn tác vụ học không giám sát phổ biến không?
+6. Bạn sẽ sử dụng loại thuật toán Học Máy nào để cho phép rô bốt đi lại trong các địa hình chưa biết?
+7. Bạn sẽ sử dụng loại thuật toán nào để phân nhóm khách hàng thành nhiều nhóm?
+8. Bạn sẽ đặt bài toán phát hiện thư rác là bài toán học có giám sát hay học không giám sát?
+9. Hệ thống học trực tuyến là gì?
+10. Thế nào là học ngoài bộ nhớ chính?
+11. Loại thuật toán nào dựa vào phép đo độ tương đồng để đưa ra dự đoán?
+12. Sự khác biệt giữa tham số mô hình và siêu tham số của thuật toán là gì?
+13. Thuật toán học dựa trên mô hình đang tìm kiếm thứ gì? Chiến lược phổ biến nhất mà chúng
+sử dụng để thành công là gì? Chúng đưa ra dự đoán như thế nào?
+14. Bạn có thể liệt kê bốn thách thức chính trong Học Máy không?
+15. Nếu mô hình của bạn hoạt động tốt trên dữ liệu huấn luyện nhưng lại khái quát kém đối với dữ liệu mới, điều gì đang xảy ra? Bạn có thể liệt kê ba giải pháp khả thi cho vấn đề này không?
+16. Tập kiểm tra là gì và tại sao bạn lại muốn sử dụng nó?
+17. Mục đích của tập kiểm định là gì?
+18. Tập huấn luyện - phát triển là gì, khi nào bạn cần sử dụng và làm thế nào để sử dụng nó?
+19. Vấn đề gì có thể xảy ra nếu bạn tinh chỉnh siêu tham số bằng tập kiểm tra?
+Lời giải cho những bài tập trên nằm ở Phụ lục A.
 
 [Toàn cảnh Học Máy](https://drive.google.com/drive/folders/1U2bYaRq8guNpDsIaIx4FAQFLmRBLN06g)
