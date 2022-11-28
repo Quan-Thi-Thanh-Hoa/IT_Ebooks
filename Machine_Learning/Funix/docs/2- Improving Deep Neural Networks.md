@@ -65,7 +65,6 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 > Đây là khóa học thứ hai của Chuyên ngành Deep Learning.
 
 
-
 ## Practical aspects of Deep Learning
 
 ### Train / Dev / Test sets
@@ -95,7 +94,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
   - Nếu mô hình của bạn là **overfitting** sau đó nó có một "high variance"
   - Mô hình của bạn sẽ ổn nếu bạn cân bằng Bias / Variance
   - For more:
-    - ![]([Images/01-_Bias_-_Variance.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/2-%20Improving%20Deep%20Neural%20Networks/Images/01-_Bias_-_Variance.png))
+    - ![](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/2-%20Improving%20Deep%20Neural%20Networks/Images/01-_Bias_-_Variance.png)
 - Một ý tưởng khác để lấy độ lệch/phương sai nếu bạn không có cơ chế vẽ đồ thị 2D:
 -   - High variance (overfitting) for example:
     - Training error: 1%
