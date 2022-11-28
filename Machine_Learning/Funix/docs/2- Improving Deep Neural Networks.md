@@ -89,18 +89,18 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 
 ### Bias / Variance
 
-- Bias / Variance techniques are Easy to learn, but difficult to master.
+- Bias / Variance techniques dễ học, nhưng khó thành thạo.
 - So here the explanation of Bias / Variance:
-  - If your model is **underfitting** (logistic regression of non linear data) it has a "high bias"
-  - If your model is **overfitting** then it has a "high variance"
-  - Your model will be alright if you balance the Bias / Variance
+  - Nếu mô hình của bạn là **underfitting** (logistic regression of non linear data) it has a "high bias"
+  - Nếu mô hình của bạn là **overfitting** sau đó nó có một "high variance"
+  - Mô hình của bạn sẽ ổn nếu bạn cân bằng Bias / Variance
   - For more:
     - ![]([Images/01-_Bias_-_Variance.png](https://raw.githubusercontent.com/mbadry1/DeepLearning.ai-Summary/master/2-%20Improving%20Deep%20Neural%20Networks/Images/01-_Bias_-_Variance.png))
 - Một ý tưởng khác để lấy độ lệch/phương sai nếu bạn không có cơ chế vẽ đồ thị 2D:
 -   - High variance (overfitting) for example:
     - Training error: 1%
     - Dev error: 11%
-  - high Bias (underfitting) for example:
+  - high Bias (underfitting) ví dụ:
     - Training error: 15%
     - Dev error: 14%
   - high Bias (underfitting) && High variance (overfitting) for example:
@@ -109,48 +109,48 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
   - Best:
     - Training error: 0.5%
     - Test error: 1%
-  - These Assumptions came from that human has 0% error. If the problem isn't like that you'll need to use human error as baseline.
+  - Những Giả định này đến từ việc con người có 0% lỗi. Nếu sự cố không giống như vậy, bạn sẽ cần sử dụng lỗi của con người làm đường cơ sở.
 
 ### Basic Recipe for Machine Learning
 
-- If your algorithm has a high bias:
-  - Try to make your NN bigger (size of hidden units, number of layers)
-  - Try a different model that is suitable for your data.
-  - Try to run it longer.
-  - Different (advanced) optimization algorithms.
-- If your algorithm has a high variance:
-  - More data.
-  - Try regularization.
-  - Try a different model that is suitable for your data.
-- You should try the previous two points until you have a low bias and low variance.
-- In the older days before deep learning, there was a "Bias/variance tradeoff". But because now you have more options/tools for solving the bias and variance problem its really helpful to use deep learning.
-- Training a bigger neural network never hurts.
+- Nếu thuật toán của bạn có a high bias:
+  - Cố gắng làm cho NN của bạn lớn hơn (kích thước của các đơn vị ẩn, số lớp)
+  - Hãy thử một mô hình khác phù hợp với dữ liệu của bạn.
+  - Hãy cố gắng chạy nó lâu hơn.
+  - Các thuật toán tối ưu hóa (nâng cao) khác nhau.
+- Nếu thuật toán của bạn có a high variance:
+  - Nhiều dữ liệu hơn.
+  - Hãy thử chuẩn hóa.
+  - Hãy thử một mô hình khác phù hợp với dữ liệu của bạn.
+- Bạn nên thử hai điểm trước cho đến khi bạn có a low bias and low variance.
+- Trong những ngày xa xưa trước khi học sâu, đã có a "Bias/variance tradeoff". Nhưng vì bây giờ bạn có nhiều tùy chọn/công cụ hơn để giải quyết vấn đề sai lệch và sai lệch nên việc sử dụng học sâu thực sự hữu ích.
+- Đào tạo một mạng lưới thần kinh lớn hơn không bao giờ gây hại.
 
 ### Regularization
 
-- Adding regularization to NN will help it reduce variance (overfitting)
+- Thêm chuẩn hóa vào NN sẽ giúp nó giảm variance (overfitting)
 - L1 matrix norm:
   - `||W|| = Sum(|w[i,j]|)  # sum of absolute values of all w`
-- L2 matrix norm because of arcane technical math reasons is called Frobenius norm:
+- L2 định mức ma trận vì lý do toán học kỹ thuật phức tạp được gọi là định mức Frobenius:
   - `||W||^2 = Sum(|w[i,j]|^2)	# sum of all w squared`
-  - Also can be calculated as `||W||^2 = W.T * W if W is a vector`
+  - Cũng có thể được tính như `||W||^2 = W.T * W if W is a vector`
 - Regularization for logistic regression:
-  - The normal cost function that we want to minimize is: `J(w,b) = (1/m) * Sum(L(y(i),y'(i)))`
+  - Hàm chi phí bình thường mà mình muốn giảm thiểu là: `J(w,b) = (1/m) * Sum(L(y(i),y'(i)))`
   - The L2 regularization version: `J(w,b) = (1/m) * Sum(L(y(i),y'(i))) + (lambda/2m) * Sum(|w[i]|^2)`
   - The L1 regularization version: `J(w,b) = (1/m) * Sum(L(y(i),y'(i))) + (lambda/2m) * Sum(|w[i]|)`
   - The L1 regularization version makes a lot of w values become zeros, which makes the model size smaller.
-  - L2 regularization is being used much more often.
+  - L2 regularization đang được sử dụng thường xuyên hơn nhiều.
   - `lambda` here is the regularization parameter (hyperparameter)
 - Regularization for NN:
-  - The normal cost function that we want to minimize is:   
+  - Hàm chi phí bình thường mà mình muốn giảm thiểu là:   
     `J(W1,b1...,WL,bL) = (1/m) * Sum(L(y(i),y'(i)))`
 
   - The L2 regularization version:   
     `J(w,b) = (1/m) * Sum(L(y(i),y'(i))) + (lambda/2m) * Sum((||W[l]||^2)`
 
-  - We stack the matrix as one vector `(mn,1)` and then we apply `sqrt(w1^2 + w2^2.....)`
+  - Mình xếp ma trận thành một vectơ `(mn,1)` và sau đó mình áp dụng `sqrt(w1^2 + w2^2.....)`
 
-  - To do back propagation (old way):   
+  - Để thực hiện lan truyền ngược (back propagation) (old way):   
     `dw[l] = (from back propagation)`
 
   - The new way:   
@@ -165,7 +165,7 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
            = (1 - (learning_rate*lambda)/m) * w[l] - learning_rate * (from back propagation)
       ```
 
-  - In practice this penalizes large weights and effectively limits the freedom in your model.
+  - Trong thực tế, điều này làm giảm trọng lượng lớn và hạn chế hiệu quả sự tự do trong mô hình của bạn.
 
   - The new term `(1 - (learning_rate*lambda)/m) * w[l]`  causes the **weight to decay** in proportion to its size.
 
@@ -174,14 +174,13 @@ Dưới đây là tóm tắt khóa học như được đưa ra trong khóa họ
 
 Here are some intuitions:
   - Intuition 1:
-     - If `lambda` is too large - a lot of w's will be close to zeros which will make the NN simpler (you can think of it as it would behave closer to logistic regression).
-     - If `lambda` is good enough it will just reduce some weights that makes the neural network overfit.
+     - If `lambda` quá lớn - rất nhiều w sẽ gần bằng 0, điều này sẽ làm cho NN đơn giản hơn (bạn có thể nghĩ về nó vì nó sẽ hoạt động gần với hồi quy logistic hơn).
+     - If `lambda` là đủ tốt, nó sẽ chỉ giảm một số trọng số khiến mạng thần kinh trở nên quá khớp (overfit).
   - Intuition 2 (with _tanh_ activation function):
      - If `lambda` is too large, w's will be small (close to zero) - will use the linear part of the _tanh_ activation function, so we will go from non linear activation to _roughly_ linear which would make the NN a _roughly_ linear classifier.
      - If `lambda` good enough it will just make some of _tanh_ activations _roughly_ linear which will prevent overfitting.
      
 _**Implementation tip**_: if you implement gradient descent, one of the steps to debug gradient descent is to plot the cost function J as a function of the number of iterations of gradient descent and you want to see that the cost function J decreases **monotonically** after every elevation of gradient descent with regularization. If you plot the old definition of J (no regularization) then you might not see it decrease monotonically.
-
 
 ### Dropout Regularization
 
